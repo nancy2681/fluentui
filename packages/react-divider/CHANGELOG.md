@@ -1,8 +1,26 @@
 # Change Log - @fluentui/react-divider
 
-This log was last generated on Fri, 30 Apr 2021 07:42:23 GMT and should not be manually modified.
+This log was last generated on Wed, 05 May 2021 07:36:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [9.0.0-alpha.21](https://github.com/microsoft/fluentui/tree/@fluentui/react-divider_v9.0.0-alpha.21)
+
+Wed, 05 May 2021 07:36:50 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@fluentui/react-divider_v9.0.0-alpha.20..@fluentui/react-divider_v9.0.0-alpha.21)
+
+### Changes
+
+- transform styles with Babel plugin ([PR #16534](https://github.com/microsoft/fluentui/pull/16534) by olfedias@microsoft.com)
+
+## [9.0.0-alpha.20](https://github.com/microsoft/fluentui/tree/@fluentui/react-divider_v9.0.0-alpha.20)
+
+Mon, 03 May 2021 07:45:19 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@fluentui/react-divider_v9.0.0-alpha.19..@fluentui/react-divider_v9.0.0-alpha.20)
+
+### Changes
+
+- Bump @fluentui/react-utilities to v9.0.0-alpha.21 ([PR #18005](https://github.com/microsoft/fluentui/pull/18005) by lingfan.gao@microsoft.com)
 
 ## [9.0.0-alpha.19](https://github.com/microsoft/fluentui/tree/@fluentui/react-divider_v9.0.0-alpha.19)
 

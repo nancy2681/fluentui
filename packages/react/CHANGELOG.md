@@ -1,8 +1,26 @@
 # Change Log - @fluentui/react
 
-This log was last generated on Fri, 30 Apr 2021 07:42:23 GMT and should not be manually modified.
+This log was last generated on Wed, 05 May 2021 07:36:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [8.14.2](https://github.com/microsoft/fluentui/tree/@fluentui/react_v8.14.2)
+
+Wed, 05 May 2021 07:36:50 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@fluentui/react_v8.14.1..@fluentui/react_v8.14.2)
+
+### Patches
+
+- Remove aria-live from ColorPicker text input ([PR #18048](https://github.com/microsoft/fluentui/pull/18048) by sarah.higley@microsoft.com)
+
+## [8.14.1](https://github.com/microsoft/fluentui/tree/@fluentui/react_v8.14.1)
+
+Tue, 04 May 2021 07:36:35 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@fluentui/react_v8.14.0..@fluentui/react_v8.14.1)
+
+### Patches
+
+- Dialog/Modal/Panel: when opened, body children elements are now hidden and set to aria-hidden = true ([PR #17925](https://github.com/microsoft/fluentui/pull/17925) by tristan.watanabe@gmail.com)
 
 ## [8.14.0](https://github.com/microsoft/fluentui/tree/@fluentui/react_v8.14.0)
 

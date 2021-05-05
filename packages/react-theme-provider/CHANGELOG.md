@@ -1,8 +1,26 @@
 # Change Log - @fluentui/react-theme-provider
 
-This log was last generated on Fri, 30 Apr 2021 07:42:23 GMT and should not be manually modified.
+This log was last generated on Wed, 05 May 2021 07:36:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [9.0.0-alpha.30](https://github.com/microsoft/fluentui/tree/@fluentui/react-theme-provider_v9.0.0-alpha.30)
+
+Wed, 05 May 2021 07:36:50 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@fluentui/react-theme-provider_v9.0.0-alpha.29..@fluentui/react-theme-provider_v9.0.0-alpha.30)
+
+### Changes
+
+- transform styles with Babel plugin ([PR #16534](https://github.com/microsoft/fluentui/pull/16534) by olfedias@microsoft.com)
+
+## [9.0.0-alpha.29](https://github.com/microsoft/fluentui/tree/@fluentui/react-theme-provider_v9.0.0-alpha.29)
+
+Mon, 03 May 2021 07:45:19 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@fluentui/react-theme-provider_v9.0.0-alpha.28..@fluentui/react-theme-provider_v9.0.0-alpha.29)
+
+### Changes
+
+- Bump @fluentui/react-utilities to v9.0.0-alpha.21 ([PR #18005](https://github.com/microsoft/fluentui/pull/18005) by lingfan.gao@microsoft.com)
 
 ## [9.0.0-alpha.28](https://github.com/microsoft/fluentui/tree/@fluentui/react-theme-provider_v9.0.0-alpha.28)
 

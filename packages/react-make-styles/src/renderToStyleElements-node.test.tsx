@@ -22,7 +22,7 @@ expect.addSnapshotSerializer({
   },
 });
 
-describe('renderToStyleElements', () => {
+xdescribe('renderToStyleElements', () => {
   it('supports overrides', () => {
     const useExampleStyles = makeStyles({
       root: {

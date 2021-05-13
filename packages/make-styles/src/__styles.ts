@@ -1,13 +1,14 @@
 import { resolveClassesBySlots } from './runtime/resolveClassesBySlots';
-import { MakeStylesOptions, ResolvedStylesBySlots } from './types';
+import { MakeStylesOptions } from './types';
+import { ClassnamesMapping, CSSRules } from './makeStyles';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms.
  *
  * @internal
  */
-export function __styles<Slots extends string>(resolvedStyles: ResolvedStylesBySlots<Slots>) {
-  let resolvedClasses: Record<Slots, string> | null = null;
+export function __styles<Slots extends string>(classnamesMapping: ClassnamesMapping<Slots>, cssRules: CSSRules) {
+  let resolvedClassesLtr: Record<Slots, string> | null = null;
   let resolvedClassesRtl: Record<Slots, string> | null = null;
 
   const insertionCache: Record<string, boolean> = {};
@@ -19,18 +20,28 @@ export function __styles<Slots extends string>(resolvedStyles: ResolvedStylesByS
       // As RTL classes are different they should have a different cache key for insertion
       const rendererId = renderer.id + 'r';
 
-      if (resolvedClassesRtl === null || insertionCache[rendererId] === undefined) {
-        resolvedClassesRtl = resolveClassesBySlots(resolvedStyles, dir, renderer);
+      if (resolvedClassesRtl === null) {
+        resolvedClassesRtl = resolveClassesBySlots(classnamesMapping, dir);
+      }
+
+      if (insertionCache[rendererId] === undefined) {
+        renderer.insertCSSRules(cssRules!);
         insertionCache[rendererId] = true;
       }
     } else {
-      if (resolvedClasses === null || insertionCache[renderer.id] === undefined) {
-        resolvedClasses = resolveClassesBySlots(resolvedStyles, dir, renderer);
-        insertionCache[options.renderer.id] = true;
+      if (resolvedClassesLtr === null) {
+        resolvedClassesLtr = resolveClassesBySlots(classnamesMapping, dir);
+      }
+
+      if (insertionCache[renderer.id] === undefined) {
+        renderer.insertCSSRules(cssRules!);
+        insertionCache[renderer.id] = true;
       }
     }
 
-    return dir === 'ltr' ? (resolvedClasses as Record<Slots, string>) : (resolvedClassesRtl as Record<Slots, string>);
+    return dir === 'ltr'
+      ? (resolvedClassesLtr as Record<Slots, string>)
+      : (resolvedClassesRtl as Record<Slots, string>);
   }
 
   return computeClasses;

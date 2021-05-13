@@ -28,7 +28,7 @@ function addResolvedStyles(styles: string, result: Record<string, MakeStylesReso
   const staticCSSKey = hashString(styles);
 
   result[staticCSSKey] = [
-    '', // static rules support be inserted into default bucket
+    'd', // static rules should be inserted into default bucket
     undefined,
     styles, // static rules do not support RTL transforms
   ];

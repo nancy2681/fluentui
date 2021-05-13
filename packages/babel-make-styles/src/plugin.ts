@@ -1,7 +1,7 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel';
-import { MakeStyles, ResolvedStylesBySlots, resolveStyleRules } from '@fluentui/make-styles';
+import { StylesBySlots, resolveStyles } from '@fluentui/make-styles';
 
 import { UNHANDLED_CASE_ERROR } from './constants';
 import { astify } from './utils/astify';
@@ -437,10 +437,8 @@ export const plugin = declare<never, PluginObj<BabelPluginState>>(api => {
           }
 
           state.styleNodes?.forEach(styleNode => {
-            const nodePath = styleNode.nodePath;
-
             if (styleNode.kind === 'SPREAD') {
-              // eslint-disable-next-line no-shadow
+              const nodePath = styleNode.nodePath;
               const evaluationResult = (nodePath.get('argument') as NodePath<t.Expression>).evaluate();
 
               if (!evaluationResult.confident) {
@@ -449,31 +447,31 @@ export const plugin = declare<never, PluginObj<BabelPluginState>>(api => {
                 );
               }
 
-              const stylesBySlots: Record<string, MakeStyles> = evaluationResult.value;
-              // eslint-disable-next-line no-shadow
-              const resolvedStyles: ResolvedStylesBySlots<string> = {};
+              const stylesBySlots: StylesBySlots<string, unknown> = evaluationResult.value;
 
-              Object.keys(stylesBySlots).forEach(slotName => {
-                resolvedStyles[slotName] = resolveStyleRules(stylesBySlots[slotName]);
-              });
-
-              nodePath.replaceWithMultiple((astify(resolvedStyles) as t.ObjectExpression).properties);
-
-              return;
+              nodePath.replaceWithMultiple((astify(stylesBySlots) as t.ObjectExpression).properties);
             }
+          });
 
-            const evaluationResult = nodePath.evaluate();
+          state.calleePaths?.forEach(calleePath => {
+            const callExpressionPath = calleePath.findParent(parentPath => parentPath.isCallExpression()) as NodePath<
+              t.CallExpression
+            >;
+            const argumentPath = callExpressionPath.get('arguments.0') as NodePath<t.ObjectExpression>;
+
+            const evaluationResult = argumentPath.evaluate();
 
             if (!evaluationResult.confident) {
-              throw nodePath.buildCodeFrameError(
+              throw argumentPath.buildCodeFrameError(
                 'Evaluation of a code fragment failed, this is a bug, please report it',
               );
             }
 
-            const styles: MakeStyles = evaluationResult.value;
-            const resolvedStyles = resolveStyleRules(styles);
+            const stylesBySlots: StylesBySlots<string, unknown> = evaluationResult.value;
+            const [classnamesMapping, cssRules] = resolveStyles(stylesBySlots, 0);
 
-            nodePath.replaceWith(astify(resolvedStyles));
+            // TODO
+            callExpressionPath.node.arguments = [astify(classnamesMapping), astify(cssRules)];
           });
 
           if (state.importDeclarationPath) {

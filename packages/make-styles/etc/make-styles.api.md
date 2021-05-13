@@ -7,7 +7,13 @@
 import { Properties } from 'csstype';
 
 // @internal
-export function __styles<Slots extends string>(resolvedStyles: ResolvedStylesBySlots<Slots>): (options: Pick<MakeStylesOptions, 'dir' | 'renderer'>) => Record<Slots, string>;
+export function __styles<Slots extends string>(classnamesMapping: ClassnamesMapping<Slots>, cssRules: CSSRules): (options: Pick<MakeStylesOptions, 'dir' | 'renderer'>) => Record<Slots, string>;
+
+// @public (undocumented)
+export type ClassnamesMapping<Slots extends string> = Record<Slots, ClassnamesMappingForSlot>;
+
+// @public (undocumented)
+export type ClassnamesMappingForSlot = Record<string, string | [string, string]>;
 
 // Warning: (ae-internal-missing-underscore) The name "createCSSVariablesProxy" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -16,6 +22,9 @@ export function createCSSVariablesProxy(prefix?: string): unknown;
 
 // @public
 export function createDOMRenderer(target?: Document | undefined): MakeStylesRenderer;
+
+// @public (undocumented)
+export type CSSRules = Partial<Record<StyleBucketName, string[]>>;
 
 // Warning: (ae-internal-missing-underscore) The name "DEFINITION_LOOKUP_TABLE" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -38,7 +47,7 @@ export const LOOKUP_DEFINITIONS_INDEX = 0;
 export const LOOKUP_DIR_INDEX = 1;
 
 // @public (undocumented)
-export type LookupItem = [/* definitions: */ MakeStylesReducedDefinitions, /* dir:  */ /* dir:  */ 'rtl' | 'ltr'];
+export type LookupItem = [/* definitions: */ ClassnamesMappingForSlot, /* dir:  */ /* dir:  */ 'rtl' | 'ltr'];
 
 // @public (undocumented)
 export type MakeStaticStyles = ({
@@ -75,7 +84,7 @@ export interface MakeStyles extends Omit<Properties, 'animationName'> {
 }
 
 // @public (undocumented)
-export function makeStyles<Slots extends string, Tokens>(stylesBySlots: Record<Slots, MakeStylesStyleRule<Tokens>>, unstable_cssPriority?: number): (options: MakeStylesOptions) => Record<Slots, string>;
+export function makeStyles<Slots extends string, Tokens>(stylesBySlots: StylesBySlots<Slots, Tokens>, unstable_cssPriority?: number): (options: MakeStylesOptions) => Record<Slots, string>;
 
 // @public (undocumented)
 export interface MakeStylesOptions {
@@ -93,9 +102,11 @@ export interface MakeStylesRenderer {
     // (undocumented)
     id: string;
     // (undocumented)
+    insertCSSRules(cssRules: CSSRules): void;
+    // (undocumented)
     insertDefinitions(dir: 'ltr' | 'rtl', resolvedDefinitions: MakeStylesReducedDefinitions): string;
     // (undocumented)
-    insertionCache: Record<string, true>;
+    insertionCache: Record<string, StyleBucketName>;
     // (undocumented)
     styleElements: Partial<Record<StyleBucketName, HTMLStyleElement>>;
 }
@@ -136,6 +147,9 @@ export function resolveProxyValues<T>(value: T): T;
 // @internal
 export function resolveStyleRules(styles: MakeStyles, unstable_cssPriority?: number, pseudo?: string, media?: string, support?: string, result?: Record<string, MakeStylesResolvedRule>, rtlValue?: string): Record<string, MakeStylesResolvedRule>;
 
+// @public (undocumented)
+export function resolveStyles<Slots extends string, Tokens>(stylesBySlots: StylesBySlots<Slots, Tokens>, unstable_cssPriority: number): [ClassnamesMapping<Slots>, CSSRules];
+
 // Warning: (ae-internal-missing-underscore) The name "RULE_CLASSNAME_INDEX" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
@@ -172,10 +186,13 @@ export const SEQUENCE_HASH_LENGTH = 7;
 export const SEQUENCE_PREFIX = "__";
 
 // @public
-export type StyleBucketName = '' | 'l' | 'v' | 'w' | 'f' | 'i' | 'h' | 'a' | 'k' | 't';
+export type StyleBucketName = 'd' | 'l' | 'v' | 'w' | 'f' | 'i' | 'h' | 'a' | 'k' | 't';
 
 // @public
 export const styleBucketOrdering: StyleBucketName[];
+
+// @public (undocumented)
+export type StylesBySlots<Slots extends string, Tokens> = Record<Slots, MakeStylesStyleRule<Tokens>>;
 
 
 // (No @packageDocumentation comment for this package)

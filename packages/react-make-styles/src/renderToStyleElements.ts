@@ -31,6 +31,8 @@ export function renderToStyleElements(renderer: MakeStylesRenderer): React.React
   for (const definitionKey in DEFINITION_LOOKUP_TABLE) {
     const lookupItem = DEFINITION_LOOKUP_TABLE[definitionKey];
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const definitions: MakeStylesReducedDefinitions = lookupItem[LOOKUP_DEFINITIONS_INDEX];
     const dir = lookupItem[LOOKUP_DIR_INDEX];
 

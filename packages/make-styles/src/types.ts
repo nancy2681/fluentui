@@ -1,4 +1,5 @@
 import { Properties as CSSProperties } from 'csstype';
+import { ClassnamesMappingForSlot, CSSRules } from './makeStyles';
 
 export interface MakeStyles extends Omit<CSSProperties, 'animationName'> {
   // TODO Questionable: how else would users target their own children?
@@ -68,7 +69,7 @@ export interface MakeStylesRenderer {
   /**
    * @private
    */
-  insertionCache: Record<string, true>;
+  insertionCache: Record<string, StyleBucketName>;
 
   /**
    * @private
@@ -79,6 +80,11 @@ export interface MakeStylesRenderer {
    * @private
    */
   insertDefinitions(dir: 'ltr' | 'rtl', resolvedDefinitions: MakeStylesReducedDefinitions): string;
+
+  /**
+   * @private
+   */
+  insertCSSRules(cssRules: CSSRules): void;
 }
 
 /**
@@ -86,7 +92,7 @@ export interface MakeStylesRenderer {
  */
 export type StyleBucketName =
   // default
-  | ''
+  | 'd'
   // link
   | 'l'
   // visited
@@ -106,4 +112,4 @@ export type StyleBucketName =
   // at-rules (@media, @support)
   | 't';
 
-export type LookupItem = [/* definitions: */ MakeStylesReducedDefinitions, /* dir:  */ 'rtl' | 'ltr'];
+export type LookupItem = [/* definitions: */ ClassnamesMappingForSlot, /* dir:  */ 'rtl' | 'ltr'];

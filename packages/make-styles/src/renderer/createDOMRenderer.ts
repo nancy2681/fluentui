@@ -5,7 +5,7 @@ import {
   RULE_STYLE_BUCKET_INDEX,
   RULE_RTL_CLASSNAME_INDEX,
 } from '../constants';
-import { MakeStylesRenderer } from '../types';
+import { MakeStylesRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
 let lastIndex = 0;
@@ -66,10 +66,40 @@ export function createDOMRenderer(
           }
         }
 
-        renderer.insertionCache[cacheKey] = true;
+        renderer.insertionCache[cacheKey] = bucketName;
       }
 
       return classes.slice(0, -1);
+    },
+
+    insertCSSRules(cssRules) {
+      if (target) {
+        // eslint-disable-next-line guard-for-in
+        for (const styleBucketName in cssRules) {
+          const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
+          const sheet = getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer);
+
+          for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
+            const ruleCSS = cssRulesForBucket[i];
+
+            if (renderer.insertionCache[ruleCSS]) {
+              continue;
+            }
+
+            renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+
+            try {
+              sheet.insertRule(ruleCSS, sheet.cssRules.length);
+            } catch (e) {
+              // We've disabled these warnings due to false-positive errors with browser prefixes
+              if (process.env.NODE_ENV !== 'production' && !ignoreSuffixesRegex.test(ruleCSS)) {
+                // eslint-disable-next-line no-console
+                console.error(`There was a problem inserting the following rule: "${ruleCSS}"`, e);
+              }
+            }
+          }
+        }
+      }
     },
   };
 

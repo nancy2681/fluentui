@@ -4,17 +4,18 @@
 
 ```ts
 
+import { ClassnamesMapping } from '@fluentui/make-styles';
 import { createDOMRenderer } from '@fluentui/make-styles';
+import { CSSRules } from '@fluentui/make-styles';
 import { MakeStaticStyles } from '@fluentui/make-styles';
 import { MakeStylesRenderer } from '@fluentui/make-styles';
 import { MakeStylesStyleRule } from '@fluentui/make-styles';
 import { mergeClasses } from '@fluentui/make-styles';
 import * as React_2 from 'react';
-import { ResolvedStylesBySlots } from '@fluentui/make-styles';
 import { Theme } from '@fluentui/react-theme';
 
 // @internal
-export function __styles<Slots extends string>(resolvedStyles: ResolvedStylesBySlots<Slots>): () => Record<Slots, string>;
+export function __styles<Slots extends string>(classnamesMapping: ClassnamesMapping<Slots>, cssRules: CSSRules): () => Record<Slots, string>;
 
 export { createDOMRenderer }
 

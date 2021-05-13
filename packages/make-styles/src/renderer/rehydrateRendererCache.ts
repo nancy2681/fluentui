@@ -32,7 +32,7 @@ export function rehydrateRendererCache(
         // "cacheKey" is either a class name or an animation name
         const [, cacheKey] = match;
 
-        renderer.insertionCache[cacheKey] = true;
+        renderer.insertionCache[cacheKey] = bucketName;
       }
     });
   }

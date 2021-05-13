@@ -104,8 +104,6 @@ export interface MakeStylesRenderer {
     // (undocumented)
     insertCSSRules(cssRules: CSSRules): void;
     // (undocumented)
-    insertDefinitions(dir: 'ltr' | 'rtl', resolvedDefinitions: MakeStylesReducedDefinitions): string;
-    // (undocumented)
     insertionCache: Record<string, StyleBucketName>;
     // (undocumented)
     styleElements: Partial<Record<StyleBucketName, HTMLStyleElement>>;

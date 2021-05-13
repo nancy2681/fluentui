@@ -79,11 +79,6 @@ export interface MakeStylesRenderer {
   /**
    * @private
    */
-  insertDefinitions(dir: 'ltr' | 'rtl', resolvedDefinitions: MakeStylesReducedDefinitions): string;
-
-  /**
-   * @private
-   */
   insertCSSRules(cssRules: CSSRules): void;
 }
 

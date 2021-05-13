@@ -1,13 +1,9 @@
-import hashString from '@emotion/hash';
-
-import { MakeStaticStyles, MakeStylesResolvedRule } from '../types';
+import { CSSRules } from '../makeStyles';
+import { MakeStaticStyles } from '../types';
 import { compileStaticCSS } from './compileStaticCSS';
 import { compileCSSRules } from './compileCSS';
 
-export function resolveStaticStyleRules(
-  styles: MakeStaticStyles,
-  result: Record<string, MakeStylesResolvedRule> = {},
-): Record<string, MakeStylesResolvedRule> {
+export function resolveStaticStyleRules(styles: MakeStaticStyles, result: CSSRules = {}): CSSRules {
   if (typeof styles === 'string') {
     const cssRules = compileCSSRules(styles);
     for (const rule of cssRules) {
@@ -24,12 +20,8 @@ export function resolveStaticStyleRules(
   return result;
 }
 
-function addResolvedStyles(styles: string, result: Record<string, MakeStylesResolvedRule> = {}): void {
-  const staticCSSKey = hashString(styles);
-
-  result[staticCSSKey] = [
-    'd', // static rules should be inserted into default bucket
-    undefined,
-    styles, // static rules do not support RTL transforms
-  ];
+function addResolvedStyles(cssRule: string, result: CSSRules = {}): void {
+  // 👇 static rules should be inserted into default bucket
+  result.d = result.d || [];
+  result.d.push(cssRule);
 }

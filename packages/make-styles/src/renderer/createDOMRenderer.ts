@@ -18,21 +18,21 @@ export function createDOMRenderer(
     id: `d${lastIndex++}`,
 
     insertCSSRules(cssRules) {
-      if (target) {
-        // eslint-disable-next-line guard-for-in
-        for (const styleBucketName in cssRules) {
-          const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
-          const sheet = getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer);
+      // eslint-disable-next-line guard-for-in
+      for (const styleBucketName in cssRules) {
+        const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
+        const sheet = target && getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer);
 
-          for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
-            const ruleCSS = cssRulesForBucket[i];
+        for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
+          const ruleCSS = cssRulesForBucket[i];
 
-            if (renderer.insertionCache[ruleCSS]) {
-              continue;
-            }
+          if (renderer.insertionCache[ruleCSS]) {
+            continue;
+          }
 
-            renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+          renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
 
+          if (sheet) {
             try {
               sheet.insertRule(ruleCSS, sheet.cssRules.length);
             } catch (e) {

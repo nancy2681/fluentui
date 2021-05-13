@@ -6,14 +6,13 @@ describe('resolveStaticStyleRules', () => {
       resolveStaticStyleRules({
         '@font-face': {
           fontFamily: 'Open Sans',
-          src: `url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),
-                 url("/fonts/OpenSans-Regular-webfont.woff") format("woff")`,
+          src: `url("webfont.woff2") format("woff2")`,
         },
       }),
     ).toMatchInlineSnapshot(`
       Object {
         "d": Array [
-          "@font-face{font-family:Open Sans;src:url(\\"/fonts/OpenSans-Regular-webfont.woff2\\") format(\\"woff2\\"),url(\\"/fonts/OpenSans-Regular-webfont.woff\\") format(\\"woff\\");}",
+          "@font-face{font-family:Open Sans;src:url(\\"webfont.woff2\\") format(\\"woff2\\");}",
         ],
       }
     `);
